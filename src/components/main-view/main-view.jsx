@@ -38,11 +38,12 @@ export const MainView = () => {
   if (!user) {
     return (
       <>
+        Login
         <LoginView onLoggedIn={(user, token) => {
           setUser(user);
           setToken(token);
         }} />
-        or
+        Or Create User
         <SignupView />
       </>
     );

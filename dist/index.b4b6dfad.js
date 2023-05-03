@@ -27290,10 +27290,10 @@ const MainView = ()=>{
     _s();
     const storedUser = JSON.parse(localStorage.getItem("user"));
     const storedToken = localStorage.getItem("token");
-    const [user, setUser] = (0, _react.useState)(null);
+    const [user, setUser] = (0, _react.useState)(storedUser);
     const [movies, setMovies] = (0, _react.useState)([]);
     const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
-    const [token, setToken] = (0, _react.useState)(null);
+    const [token, setToken] = (0, _react.useState)(storedToken);
     (0, _react.useEffect)(()=>{
         if (!token) return;
         fetch("https://supercoolmovieapi.herokuapp.com/movies", {
@@ -27385,7 +27385,7 @@ const MainView = ()=>{
         columnNumber: 5
     }, undefined);
 };
-_s(MainView, "3vh6lwJzyFAPbGbuPWMvLKVz7JA=");
+_s(MainView, "MBhJwdQkC2otA2kTLKjhaxqONeM=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");

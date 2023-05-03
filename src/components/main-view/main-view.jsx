@@ -43,7 +43,7 @@ export const MainView = () => {
           setUser(user);
           setToken(token);
         }} />
-        Or Create User
+        Create User
         <SignupView />
       </>
     );

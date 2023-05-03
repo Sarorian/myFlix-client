@@ -27330,7 +27330,7 @@ const MainView = ()=>{
                 lineNumber: 42,
                 columnNumber: 9
             }, undefined),
-            "Or Create User",
+            "Create User",
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _signupView.SignupView), {}, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
                 lineNumber: 47,

@@ -1,10 +1,24 @@
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 import "./movie-view.scss"
 
-export const MovieView = ({ movie, onBackClick }) => {
+export const MovieView = ({ movies, onFavoriteMovieAdded, }) => {
+  const { movieId } = useParams();
+  
+  console.log("movieId:", movieId);
+  console.log("movies:", movies);
+
+  const movie = movies.find((m) => m.id === movieId);
+
+  // Check if the movie is found or undefined
+  if (!movie) {
+    return <div>Movie not found</div>;
+  }
+
     return (
       <div>
         <div>
-          <img src={movie.image} />
+          <img className="w-100" src={movie.image} />
         </div>
         <div>
           <span>Title: </span>
@@ -22,13 +36,10 @@ export const MovieView = ({ movie, onBackClick }) => {
           <span>Genre: </span>
           <span>{movie.genre}</span>
         </div>
-        <button
-          onClick={onBackClick}
-          className="back-button"
-          style={{ cursor: "pointer" }}
-        >
-          Back
-        </button>
+        <Link to={"/"}>
+          <button className="back-button">Back</button>
+        </Link>
+        <button onClick={() => onFavoriteMovieAdded(movieId)}>Favorite</button>
       </div>
     );
   };

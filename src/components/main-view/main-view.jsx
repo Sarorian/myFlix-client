@@ -10,12 +10,12 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 
 export const MainView = () => {
-
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
   const [user, setUser] = useState(storedUser);
   const [movies, setMovies] = useState([]);
   const [token, setToken] = useState(storedToken);
+
   useEffect(() => {
     if (!token) return;
     fetch("https://supercoolmovieapi.herokuapp.com/movies", {
@@ -23,45 +23,67 @@ export const MainView = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("data returned form api" + data);
-          const moviesFromAPI = data.map((doc) => ({
-            id: doc._id,
-            title: doc.Title,
-            image: doc.ImageURL,
-            description: doc.Description,
-            genre: doc.Genre.name,
-            director: doc.Director.Name
-          }));
-          setMovies(moviesFromAPI);
+        const moviesFromAPI = data.map((doc) => ({
+          id: doc._id,
+          title: doc.Title,
+          image: doc.ImageURL,
+          description: doc.Description,
+          genre: doc.Genre.name,
+          director: doc.Director.Name
+        }));
+        setMovies(moviesFromAPI);
       })
       .catch((error) => {
         console.error(error);
       });
   }, [token]);
 
-//onFavoriteMovieAdded, ..Deleted. setUser afterwards
+  // ...
 
-const onFavoriteMovieAdded = (movieId) => {
-  fetch(`https://supercoolmovieapi.herokuapp.com/user/${user.Username}/movies/${movieId}`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-  })
-    .then((res) => {
-      if (res.ok) {
-        window.location.reload();
-      } else {
-        throw new Error("Error adding movie");
-      }
+  const onFavoriteMovieAdded = (movieId) => {
+    fetch(`https://supercoolmovieapi.herokuapp.com/users/${user.Username}/movies/${movieId}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     })
-    .catch((error) => {
-      console.error(error);
-      alert(error.message);
-    });
-};
+      .then((res) => {
+        if (res.ok) {
+          const updatedUser = { ...user, FavoriteMovies: [...user.FavoriteMovies, movieId] };
+          setUser(updatedUser);
+          localStorage.setItem("user", JSON.stringify(updatedUser));
+        } else {
+          throw new Error("Error adding movie");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        alert(error.message);
+      });
+  };
 
+  const onFavoriteMovieRemoved = (movieId) => {
+    fetch(`https://supercoolmovieapi.herokuapp.com/users/${user.Username}/movies/${movieId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          const updatedUser = { ...user, FavoriteMovies: user.FavoriteMovies.filter(id => id !== movieId) };
+          setUser(updatedUser);
+          localStorage.setItem("user", JSON.stringify(updatedUser));
+        } else {
+          throw new Error("Error removing movie");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        alert(error.message);
+      });
+  };
 
 
   return (
@@ -118,6 +140,7 @@ const onFavoriteMovieAdded = (movieId) => {
                     movies={movies}
                     user={user}
                     onFavoriteMovieAdded={onFavoriteMovieAdded}
+                    onFavoriteMovieRemoved={onFavoriteMovieRemoved}
                   />
                 </Col>
               )}
@@ -134,6 +157,9 @@ const onFavoriteMovieAdded = (movieId) => {
                 <Col>
                   <ProfileView
                     user={user}
+                    movies={movies}
+                    onFavoriteMovieRemoved={onFavoriteMovieRemoved}
+                    token={token}
                   />
                 </Col> 
               )}

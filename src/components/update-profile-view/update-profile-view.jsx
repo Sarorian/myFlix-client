@@ -3,10 +3,10 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 export const UpdateProfileView = ({ token, user }) => {
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState(user.Username);
   const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [birthday, setBirthday] = useState("");
+  const [email, setEmail] = useState(user.Email);
+  const [birthday, setBirthday] = useState(user.Birthday?.split('T')[0]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -41,7 +41,7 @@ export const UpdateProfileView = ({ token, user }) => {
       .then((res) => {
         if (res.ok) {
           alert("Updated Profile Successfully");
-          <Navigate to="/login" replace />
+          window.location.reload();
         } else {
           alert("Update Failed");
         }
@@ -61,7 +61,7 @@ export const UpdateProfileView = ({ token, user }) => {
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-         
+          autoComplete="off"
           minLength="5"
         />
       </Form.Group>
@@ -72,7 +72,7 @@ export const UpdateProfileView = ({ token, user }) => {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          
+          autoComplete="off"
         />
       </Form.Group>
 
@@ -82,7 +82,7 @@ export const UpdateProfileView = ({ token, user }) => {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          
+          autoComplete="off"
         />
       </Form.Group>
 
@@ -92,7 +92,7 @@ export const UpdateProfileView = ({ token, user }) => {
           type="date"
           value={birthday}
           onChange={(e) => setBirthday(e.target.value)}
-          
+          autoComplete="off"
         />
       </Form.Group>
 

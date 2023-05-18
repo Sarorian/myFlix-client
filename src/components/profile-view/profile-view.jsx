@@ -6,14 +6,16 @@ import { UpdateProfileView } from "../update-profile-view/update-profile-view";
 export const ProfileView = ({ user, movies, token }) => {
   
   const handleDeleteAccount = () => {
-    fetch(`/users/${user.Username}`, {
+    fetch(`https://supercoolmovieapi.herokuapp.com/users/${user.Username}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => {
-        if (response.ok) {
+        console.log("Response Status:", response.status)
+        if (response.status === 200) {
+          console.log("Account deleted successfully");
           window.location.href = "/login";
         } else if (response.status === 400) {
           throw new Error(`${user.Username} was not found`);

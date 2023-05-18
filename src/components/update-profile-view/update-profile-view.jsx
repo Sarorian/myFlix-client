@@ -2,11 +2,14 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
+
 export const UpdateProfileView = ({ token, user }) => {
   const [username, setUsername] = useState(user.Username);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState(user.Email);
   const [birthday, setBirthday] = useState(user.Birthday?.split('T')[0]);
+
+
 
   const handleSubmit = (event) => {
     event.preventDefault();

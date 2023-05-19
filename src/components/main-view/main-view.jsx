@@ -38,8 +38,6 @@ export const MainView = () => {
       });
   }, [token]);
 
-  // ...
-
   const onFavoriteMovieAdded = (movieId) => {
     fetch(`https://supercoolmovieapi.herokuapp.com/users/${user.Username}/movies/${movieId}`, {
       method: "POST",

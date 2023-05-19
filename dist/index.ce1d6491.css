@@ -12020,4 +12020,18 @@ img {
   width: 100%;
 }
 
+.custom-navbar {
+  width: 100%;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.custom-navbar .navbar-collapse {
+  width: 100%;
+}
+
+.custom-navbar .navbar-toggler {
+  margin-right: 0;
+}
+
 /*# sourceMappingURL=index.ce1d6491.css.map */

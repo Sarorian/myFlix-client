@@ -1,6 +1,7 @@
 import{ useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useNavigate } from "react-router-dom";
 
 
 export const SignupView = () => {
@@ -8,6 +9,8 @@ export const SignupView = () => {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [birthday, setBirthday] = useState("");
+
+    const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -28,7 +31,7 @@ export const SignupView = () => {
         }).then((res) => {
             if (res.ok) {
                 alert("Signup successful");
-                window.location.reload();
+                navigate("/login");
             } else {
                 alert("Signup failed");
             }
@@ -52,7 +55,7 @@ export const SignupView = () => {
         <Form.Group controlId="formPassword">
           <Form.Label>Password:</Form.Label>
           <Form.Control
-            type="text"
+            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required

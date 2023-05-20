@@ -6,9 +6,37 @@ import UserInfo from "./user-info";
 import { Col, Container, Row, Card, Button } from "react-bootstrap";
 
 export const ProfileView = ({ user, movies, token }) => {
+
+  if (!movies?.length) {
+    return null
+  }
+
   const handleDeleteAccount = () => {
-    // Code for deleting the account
+    fetch(`https://supercoolmovieapi.herokuapp.com/users/${user.Username}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        console.log("Response Status:", response.status)
+        if (response.status === 200) {
+          console.log("Account deleted successfully");
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          window.location.href = "/login";
+        } else if (response.status === 400) {
+          throw new Error(`${user.Username} was not found`);
+        } else {
+          throw new Error("Account deletion failed");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
+
+  
 
   return (
     <Container>

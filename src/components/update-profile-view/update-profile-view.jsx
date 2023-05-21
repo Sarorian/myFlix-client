@@ -1,15 +1,12 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useNavigate } from "react-router-dom";
 
 export const UpdateProfileView = ({ token, user }) => {
   const [username, setUsername] = useState(user.Username);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState(user.Email);
   const [birthday, setBirthday] = useState(user.Birthday?.split('T')[0]);
-
-  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -43,8 +40,10 @@ export const UpdateProfileView = ({ token, user }) => {
     })
       .then((res) => {
         if (res.ok) {
-          alert("Updated Profile Successfully"); 
-          navigate("/login");
+          alert("Updated Profile Successfully. Please login with you new credentials"); 
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          window.location = '/login';
         } else {
           alert("Update Failed");
         }

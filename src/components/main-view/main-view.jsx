@@ -16,6 +16,10 @@ export const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [token, setToken] = useState(storedToken);
 
+  const onLoggedIn = ({user, token}) => {
+    setUser(user);
+    setToken(token)
+  }
   useEffect(() => {
     if (!token) return;
     fetch("https://supercoolmovieapi.herokuapp.com/movies", {
@@ -36,7 +40,7 @@ export const MainView = () => {
       .catch((error) => {
         console.error(error);
       });
-  }, [token]);
+  }, [user, token]);
 
   const onFavoriteMovieAdded = (movieId) => {
     fetch(`https://supercoolmovieapi.herokuapp.com/users/${user.Username}/movies/${movieId}`, {
@@ -118,7 +122,7 @@ export const MainView = () => {
                 <Navigate to="/" />
               ) : (
                 <Col md={5}>
-                  <LoginView onLoggedIn={(user) => setUser(user)} />
+                  <LoginView onLoggedIn={onLoggedIn} />
                 </Col>
               )}
             </>

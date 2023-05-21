@@ -30,7 +30,7 @@ export const SignupView = () => {
             }
         }).then((res) => {
             if (res.ok) {
-                alert("Signup successful");
+                alert("Signup successful. Please login on the next screen.");
                 navigate("/login");
             } else {
                 alert("Signup failed");

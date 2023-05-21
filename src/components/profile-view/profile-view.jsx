@@ -4,12 +4,9 @@ import { MovieCard } from "../movie-card/movie-card";
 import { UpdateProfileView } from "../update-profile-view/update-profile-view";
 import UserInfo from "./user-info";
 import { Col, Container, Row, Card, Button } from "react-bootstrap";
+import {Link} from 'react-router-dom';
 
 export const ProfileView = ({ user, movies, token }) => {
-
-  if (!movies?.length) {
-    return null
-  }
 
   const handleDeleteAccount = () => {
     fetch(`https://supercoolmovieapi.herokuapp.com/users/${user.Username}`, {
@@ -64,16 +61,19 @@ export const ProfileView = ({ user, movies, token }) => {
           <h3>Favorite Movies</h3>
         </Col>
         <Col xs={12}>
-          <Row>
-            {user.FavoriteMovies.map((movieId) => {
-              const movie = movies.find((m) => m.id === movieId);
-              return (
-                <Col xs={12} sm={6} md={4} lg={3} key={movieId}>
-                  <MovieCard movie={movie} />
-                </Col>
-              );
-            })}
-          </Row>
+          { user.FavoriteMovies.length > 0 ? 
+            <Row>
+              {user.FavoriteMovies.map((movieId) => {
+                const movie = movies.find((m) => m.id === movieId);
+                return (
+                  <Col xs={12} sm={6} md={4} lg={3} key={movieId}>
+                    <MovieCard movie={movie} />
+                  </Col>
+                );
+              })}
+            </Row> : 
+              <p>You don't have any favorite movies. Click <Link to='/'>here</Link> to add some</p>
+          }
         </Col>
       </Row>
 

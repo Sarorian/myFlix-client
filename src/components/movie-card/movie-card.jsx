@@ -26,8 +26,8 @@ export const MovieCard = ({ movie }) => {
       title: PropTypes.string.isRequired,
       image: PropTypes.string.isRequired,
       description: PropTypes.string,
-      genre: PropTypes.object,
-      director: PropTypes.object
+      genre: PropTypes.string,
+      director: PropTypes.string
     }).isRequired,
   };
   

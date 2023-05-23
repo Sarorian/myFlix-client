@@ -11,7 +11,9 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto"> {/* Use ms-auto class to align links to the right */}
+          <Nav className="ms-auto">
+            {" "}
+            {/* Use ms-auto class to align links to the right */}
             {!user && (
               <>
                 <Nav.Link as={Link} to="/login">

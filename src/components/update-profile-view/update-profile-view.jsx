@@ -6,11 +6,10 @@ export const UpdateProfileView = ({ token, user }) => {
   const [username, setUsername] = useState(user.Username);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState(user.Email);
-  const [birthday, setBirthday] = useState(user.Birthday?.split('T')[0]);
+  const [birthday, setBirthday] = useState(user.Birthday?.split("T")[0]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
 
     const data = {};
 
@@ -30,20 +29,27 @@ export const UpdateProfileView = ({ token, user }) => {
       data.Birthday = birthday;
     }
 
-    fetch(`https://supercoolmovieapi.herokuapp.com/users/${encodeURIComponent(user.Username)}`, {
-      method: "PUT",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    fetch(
+      `https://supercoolmovieapi.herokuapp.com/users/${encodeURIComponent(
+        user.Username
+      )}`,
+      {
+        method: "PUT",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
       .then((res) => {
         if (res.ok) {
-          alert("Updated Profile Successfully. Please login with you new credentials"); 
+          alert(
+            "Updated Profile Successfully. Please login with you new credentials"
+          );
           localStorage.removeItem("token");
           localStorage.removeItem("user");
-          window.location = '/login';
+          window.location = "/login";
         } else {
           alert("Update Failed");
         }
@@ -53,7 +59,6 @@ export const UpdateProfileView = ({ token, user }) => {
         alert("Update Failed");
       });
   };
-  
 
   return (
     <Form onSubmit={handleSubmit}>

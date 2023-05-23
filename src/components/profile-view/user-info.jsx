@@ -1,12 +1,12 @@
-import React from 'react'
+import React from "react";
 
 function UserInfo({ email, name }) {
-    return (
-        <>
-            <div>Name: {name}</div>
-            <div>Email: {email}</div>
-        </>
-    )
+  return (
+    <>
+      <div>Name: {name}</div>
+      <div>Email: {email}</div>
+    </>
+  );
 }
 
-export default UserInfo
+export default UserInfo;

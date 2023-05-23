@@ -18,8 +18,6 @@ export const MovieView = ({
     return <div>Movie not found</div>;
   }
 
-  console.log(user);
-
   // Check if the movie ID is in the user's favorite movies list
   const isFavorite = user.FavoriteMovies.includes(movieId);
 

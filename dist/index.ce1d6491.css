@@ -12034,4 +12034,11 @@ img {
   margin-right: 0;
 }
 
+.custom-search-bar {
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
+}
+
 /*# sourceMappingURL=index.ce1d6491.css.map */

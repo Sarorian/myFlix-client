@@ -8,6 +8,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
+import Form from "react-bootstrap/Form";
+import "./main-view.scss";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -15,6 +17,7 @@ export const MainView = () => {
   const [user, setUser] = useState(storedUser);
   const [movies, setMovies] = useState([]);
   const [token, setToken] = useState(storedToken);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const onLoggedIn = ({ user, token }) => {
     setUser(user);
@@ -190,18 +193,29 @@ export const MainView = () => {
                   <Col>The List Is Empty!</Col>
                 ) : (
                   <>
-                    {movies.map((movie) => (
-                      <Col className="mb-4" key={movie.id} md={3}>
-                        <MovieCard
-                          key={movie.id}
-                          movie={movie}
-                          movieId={movie.id}
-                          user={user}
-                          onFavoriteMovieAdded={onFavoriteMovieAdded}
-                          onFavoriteMovieRemoved={onFavoriteMovieRemoved}
-                        />
-                      </Col>
-                    ))}
+                    <Form.Control
+                      type="text"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      placeholder="Search for movies here!"
+                      className="mb-3 custom-search-bar"
+                    />
+                    {movies
+                      .filter((movie) => movie.title.includes(searchTerm))
+                      .map((movie) => (
+                        <Col className="mb-4" key={movie.id} md={3}>
+                          <MovieCard
+                            key={movie.id}
+                            movie={movie}
+                            movieId={movie.id}
+                            user={user}
+                            onFavoriteMovieAdded={onFavoriteMovieAdded}
+                            onFavoriteMovieRemoved={onFavoriteMovieRemoved}
+                          />
+                        </Col>
+                      ))}
+                    {movies.filter((movie) => movie.title.includes(searchTerm))
+                      .length === 0 && <Col>No movies found</Col>}
                   </>
                 )}
               </>
